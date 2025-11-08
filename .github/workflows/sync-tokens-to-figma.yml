@@ -1,10 +1,14 @@
-name: Sync tokens to Figma
+﻿name: Sync tokens to Figma
 on:
+  push:
+    paths:
+      - '.github/workflows/sync-tokens-to-figma.yml'
   workflow_dispatch:
     inputs:
       file_key:
         description: 'The file key of the Figma file to be updated'
-        required: true
+        required: false
+        default: ${{ vars.FILE_KEY }}
 
 jobs:
   sync-tokens-to-figma:
@@ -27,5 +31,6 @@ jobs:
       - name: Sync tokens to Figma file
         run: npm run sync-tokens-to-figma
         env:
-          FILE_KEY: ${{ github.event.inputs.file_key }}
+          FILE_KEY: ${{ github.event.inputs.file_key || vars.FILE_KEY }}
           PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_ACTION_VARIABLES_SYNC_FIGMA_TOKEN }}
+          TOKENS_DIR: tokens/ui-foundations

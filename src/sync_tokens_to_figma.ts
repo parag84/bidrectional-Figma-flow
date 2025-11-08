@@ -12,8 +12,10 @@ async function main() {
   }
   const fileKey = process.env.FILE_KEY
 
-  const TOKENS_DIR = 'tokens'
-  const tokensFiles = fs.readdirSync(TOKENS_DIR).map((file: string) => `${TOKENS_DIR}/${file}`)
+  const TOKENS_DIR = process.env.TOKENS_DIR || 'tokens'
+  const tokensFiles = fs.readdirSync(TOKENS_DIR, { withFileTypes: true })
+    .filter((d) => d.isFile() && d.name.endsWith('.json'))
+    .map((d) => `${TOKENS_DIR}/${d.name}`)
 
   const tokensByFile = readJsonFiles(tokensFiles)
 

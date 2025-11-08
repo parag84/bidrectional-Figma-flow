@@ -190,7 +190,7 @@
     },
     "surface-brand": {
       "$type": "color",
-      "$value": "{color.brand.radish}",
+      "$value": "{color.brand.watermelon}",
       "$description": "",
       "$extensions": {
         "com.figma": {
